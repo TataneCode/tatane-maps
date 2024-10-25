@@ -1,0 +1,6 @@
+﻿services:
+  tatanemaps.controllers:
+    image: tatanemaps.controllers
+    build:
+      context: .
+      dockerfile: TataneMaps.Controllers/Dockerfile
