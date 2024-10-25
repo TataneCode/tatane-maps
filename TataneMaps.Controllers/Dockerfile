@@ -2,13 +2,17 @@
 USER $APP_UID
 WORKDIR /app
 EXPOSE 8080
-EXPOSE 8081
 
 FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
+COPY ["TataneMaps.Utils/TataneMaps.Utils.csproj", "TataneMaps.Utils/"]
+COPY ["TataneMaps.Application/TataneMaps.Application.csproj", "TataneMaps.Application/"]
+COPY ["TataneMaps.Domain/TataneMaps.Domain.csproj", "TataneMaps.Domain/"]
+COPY ["TataneMaps.Persistence/TataneMaps.Persistence.csproj", "TataneMaps.Persistence/"]
+COPY ["TataneMaps.Infrastructure/TataneMaps.Infrastructure.csproj", "TataneMaps.Infrastructure/"]
 COPY ["TataneMaps.Controllers/TataneMaps.Controllers.csproj", "TataneMaps.Controllers/"]
-RUN dotnet restore "TataneMaps.Controllers/TataneMaps.Controllers.csproj"
+RUN dotnet restore "TataneMaps.Controllers.csproj"
 COPY . .
 WORKDIR "/src/TataneMaps.Controllers"
 RUN dotnet build "TataneMaps.Controllers.csproj" -c $BUILD_CONFIGURATION -o /app/build

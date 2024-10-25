@@ -1,6 +1,20 @@
 ﻿services:
-  tatanemaps.controllers:
+  tatane-maps.server:
     image: tatanemaps.controllers
     build:
       context: .
       dockerfile: TataneMaps.Controllers/Dockerfile
+    ports:
+        - "15780:8080"
+  
+  db:
+    image: postgres:alpine
+    env_file:
+      - database.env
+    ports:
+      - "15732:5432"
+    volumes:
+      - db_data:/var/lib/postgresql/data
+
+volumes:
+    db_data:
